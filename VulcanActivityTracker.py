@@ -36,7 +36,7 @@ class Jog:
             self.user_data = []
 
             # Load Image
-            self.img = PhotoImage(file= 'imgs/cu.png')
+            self.img = PhotoImage(file = 'VulcanTracker\imgs\cu.png')
             Label(self.login, image=self.img, bg='white').place(x=50, y=50)
             #Title label
             self.titlelabel = Label(self.login, text = 'Activity Tracker', fg = 'red', bg = 'white', font=('Microsoft YaHei UI Light', 23, 'bold'))
@@ -107,13 +107,13 @@ class Jog:
             self.root.geometry("925x500+300+200")
             self.root.title("Client hub")
             self.root.resizable(False, False)
-            self.menu_frame = tk.Frame(self.root, bg = 'grey')
+            self.menu_frame = tk.Frame(self.root, bg = 'white')
             #Home button and connect button indicator set up (still need to change names)
             self.connect_btn = tk.Button(self.menu_frame, text = 'Home', font = ('Bold', 12), fg = 'black', bd = 0,
                                         command=lambda: self.indicator(self.connect_marker, self.connect_page))
             self.connect_btn.place(x = 12, y = 50)
 
-            self.connect_marker = tk.Label(self.menu_frame, text = '', bg = 'grey')
+            self.connect_marker = tk.Label(self.menu_frame, text = '', bg = 'white')
             self.connect_marker.place(x = 5, y = 50, width = 5, height = 30)
 
             #Add Data button and view button indicator set up
@@ -121,7 +121,7 @@ class Jog:
                 command=lambda: self.indicator(self.view_marker, self.view_page))
             self.view_btn.place(x = 12, y = 150)
 
-            self.view_marker = tk.Label(self.menu_frame, text='', bg = 'grey')
+            self.view_marker = tk.Label(self.menu_frame, text='', bg = 'white')
             self.view_marker.place(x = 5, y = 150, width = 5, height = 30)
 
             #Specific activity button and receive button indicator set up
@@ -154,6 +154,7 @@ class Jog:
 
             # Pack the new frame into the interactive_frame
             connect_frame.pack(fill='both', expand=True)
+            connect_frame.config(bg = "white")
 
             # Total statistics Box - this where total stats for a user will be placed
             heading = Label(connect_frame, text='Your Stats', fg='red', bg='white', font=('Microsoft YaHei UI Light', 23, 'bold'))
@@ -162,26 +163,26 @@ class Jog:
             self.activity_header = Label(connect_frame, text = "Total activities", fg='red', bg='white', font=('Microsoft YaHei UI Light', 12, 'bold'))
             self.activity_header.place(x=20, y=80)
 
-            self.activites_disp = Label(connect_frame, text = self.activites, fg = "red", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.activites_disp.place(x = 60, y = 110)
+            self.activites_disp = Label(connect_frame, text = self.activites, fg = "red", bg='white', font=('Microsoft YaHei UI Light', 12, 'bold'))
+            self.activites_disp.place(x = 60, y = 105)
 
             self.miles_ran_header = Label(connect_frame, text = "Total miles", fg='red', bg='white', font=('Microsoft YaHei UI Light', 12, 'bold'))
             self.miles_ran_header.place(x=20, y=140)
 
-            self.miles_ran = Label(connect_frame, text = self.miles_ran_num, fg = "red", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.miles_ran.place(x = 60, y = 170)
+            self.miles_ran = Label(connect_frame, text = self.miles_ran_num, fg = "red", bg='white', font=('Microsoft YaHei UI Light', 12, 'bold'))
+            self.miles_ran.place(x = 60, y = 165)
 
             self.calsburnedheader = Label(connect_frame, text = "Total calories burned", fg='red', bg='white', font=('Microsoft YaHei UI Light', 12, 'bold'))
             self.calsburnedheader.place(x = 20, y = 210)
 
-            self.totalcals = Label(connect_frame, text = self.calsburned, fg = "red", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.totalcals.place(x = 60, y = 240)
+            self.totalcals = Label(connect_frame, text = self.calsburned, fg = "red", bg='white', font=('Microsoft YaHei UI Light', 12, 'bold'))
+            self.totalcals.place(x = 60, y = 235)
 
             self.elev_header = Label(connect_frame, text = "Total elevation gained", fg='red', bg='white', font=('Microsoft YaHei UI Light', 12, 'bold'))
             self.elev_header.place(x=20, y = 280)
             
-            self.total_elev = Label(connect_frame, text = self.elev, fg = "red", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.total_elev.place(x = 60, y = 310)
+            self.total_elev = Label(connect_frame, text = self.elev, fg = "red", bg='white', font=('Microsoft YaHei UI Light', 12, 'bold'))
+            self.total_elev.place(x = 60, y = 305)
 
             self.updatetext()
             
@@ -207,6 +208,7 @@ class Jog:
             rcv_frame = tk.Frame(self.interactive_frame)
             # Pack the new frame into the interactive_frame
             rcv_frame.pack(fill='both', expand=True)
+            rcv_frame.config(bg = 'white')
             lb = tk.Label(rcv_frame, text='Please ensure a connection is established before proceeding', font=('Bold', 12))
             lb.pack()
 
@@ -232,32 +234,32 @@ class Jog:
             self.specific_name_header = Label(rcv_frame, text = "Activity Name", font=('Microsoft YaHei UI Light', 12, 'bold'))
             self.specific_name_header.place(x = 10, y = 240)
             self.specific_name = Label(rcv_frame, text = "", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.specific_name.place(x = 20, y = 280)
+            self.specific_name.place(x = 20, y = 275)
 
             self.specific_cals_header = Label(rcv_frame, text = "Calories Burned", font=('Microsoft YaHei UI Light', 12, 'bold'))
             self.specific_cals_header.place(x = 10, y = 300)
             self.specific_cals = Label(rcv_frame, text = "", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.specific_cals.place(x = 20, y = 340)
+            self.specific_cals.place(x = 20, y = 335)
 
             self.specific_elev_header = Label(rcv_frame, text = "Elevation", font=('Microsoft YaHei UI Light', 12, 'bold'))
             self.specific_elev_header.place(x = 10, y = 360)
             self.specific_elev = Label(rcv_frame, text = "", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.specific_elev.place(x = 20, y = 400)
+            self.specific_elev.place(x = 20, y = 395)
 
             self.specific_zone_header = Label(rcv_frame, text = "Zone", font=('Microsoft YaHei UI Light', 12, 'bold'))
             self.specific_zone_header.place(x = 300, y = 240)
             self.specific_zone = Label(rcv_frame, text = "", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.specific_zone.place(x = 310, y = 280)
+            self.specific_zone.place(x = 310, y = 275)
 
             self.specific_pace_header = Label(rcv_frame, text = "Pace", font=('Microsoft YaHei UI Light', 12, 'bold'))
             self.specific_pace_header.place(x = 300, y = 300)
             self.specific_pace = Label(rcv_frame, text = "", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.specific_pace.place(x = 310, y = 340)
+            self.specific_pace.place(x = 310, y = 335)
 
             self.specific_hr_header = Label(rcv_frame, text = "Heart Rate", font=('Microsoft YaHei UI Light', 12, 'bold'))
             self.specific_hr_header.place(x = 300, y = 360)
             self.specific_hr = Label(rcv_frame, text = "", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.specific_hr.place(x = 310, y = 400)
+            self.specific_hr.place(x = 310, y = 395)
 
 
         def on_enter_name(self, e):
@@ -285,6 +287,7 @@ class Jog:
             view_frame = tk.Frame(self.interactive_frame)
             # Pack the new frame into the interactive_frame
             view_frame.pack(fill='both', expand=True)
+            view_frame.config(bg = 'white')
             lb = tk.Label(view_frame, text='Add Data', font=('Bold', 18))
             lb.pack()
             #Enter file prompt
