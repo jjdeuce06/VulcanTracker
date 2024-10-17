@@ -105,7 +105,7 @@ class Jog:
             #Setting up the initial window
             self.root = Toplevel(self.login)
             self.root.geometry("925x500+300+200")
-            self.root.title("Client hub")
+            self.root.title("Vulcan Activity Tracker")
             self.root.resizable(False, False)
             self.menu_frame = tk.Frame(self.root, bg = 'white')
             #Home button and connect button indicator set up (still need to change names)
