@@ -36,7 +36,7 @@ class Jog:
             self.user_data = []
 
             # Load Image
-            self.img = PhotoImage(file = 'VulcanTracker\imgs\cu.png')
+            self.img = PhotoImage(file = 'imgs\cu.png')
             Label(self.login, image=self.img, bg='white').place(x=50, y=50)
             #Title label
             self.titlelabel = Label(self.login, text = 'Activity Tracker', fg = 'red', bg = 'white', font=('Microsoft YaHei UI Light', 23, 'bold'))
@@ -402,7 +402,7 @@ class Jog:
             while(data_added == False):
                 workout = Activity()
                 workout.set_pace(int(self.new_pace))
-                workout.set_miles(int(self.newmiles))
+                workout.set_miles(float(self.newmiles))
                 workout.set_elevation(int(self.new_elev))
                 workout.set_hr(int(self.new_hr))
                 workout.set_zone(20)
@@ -420,7 +420,7 @@ class Jog:
             try:
                 # Convert user input to integer and add to miles_ran_num
                     if self.newmiles != "":
-                        miles_to_add = int(self.newmiles)  # Convert to integer
+                        miles_to_add = float(self.newmiles)  # Convert to float
                         self.miles_ran_num += miles_to_add  # Update the total miles
                     if self.newcals != "":
                         cals_to_add = int(self.newcals)
