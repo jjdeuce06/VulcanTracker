@@ -301,7 +301,7 @@ class Jog:
             self.add_miles.bind('<FocusOut>', self.on_exit_miles)
 
             cal_prompt = Label(view_frame, text = "Please enter your calories burned", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            cal_prompt.place(x = 10, y = 100)
+            cal_prompt.place(x = 10, y = 110)
 
             self.add_cals = Entry(view_frame, width = 25, fg="black", border = 0, bg = "white", font=('Microsoft YaHei UI Light', 11))
             self.add_cals.place(x = 20, y = 140)
@@ -310,7 +310,7 @@ class Jog:
             self.add_cals.bind('<FocusOut>', self.on_exit_cals)
 
             elev_prompt = Label(view_frame, text = "Please enter your elevation gained", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            elev_prompt.place(x =10, y = 160)
+            elev_prompt.place(x =10, y = 170)
 
             self.elev_enter = Entry(view_frame, width = 25, fg="black", border = 0, bg = "white", font=('Microsoft YaHei UI Light', 11))
             self.elev_enter.place(x=20, y=200)
@@ -319,7 +319,7 @@ class Jog:
             self.elev_enter.bind('<FocusOut>', self.on_exit_elev)
 
             hr_prompt = Label(view_frame, text = "Enter your average heart rate",  font=('Microsoft YaHei UI Light', 11, 'bold'))
-            hr_prompt.place(x = 10, y = 220)
+            hr_prompt.place(x = 10, y = 230)
 
             self.hr_entry = Entry(view_frame, width = 25, fg="black", border = 0, bg = "white", font=('Microsoft YaHei UI Light', 11))
             self.hr_entry.place(x = 20, y = 260)
@@ -328,7 +328,7 @@ class Jog:
             self.hr_entry.bind('<FocusOut>', self.hr_on_exit)
 
             pace_prompt = Label(view_frame, text = "Please enter your average pace", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            pace_prompt.place(x = 20, y = 280)
+            pace_prompt.place(x = 20, y = 290)
 
             self.pace_entry = Entry(view_frame, width = 25, fg="black", border = 0, bg = "white", font=('Microsoft YaHei UI Light', 11))
             self.pace_entry.place(x = 20, y = 320)
