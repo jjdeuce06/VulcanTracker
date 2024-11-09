@@ -8,10 +8,7 @@ import tkinter as tk
 from tkinter import *
 from tkinter import messagebox, filedialog, scrolledtext
 from tkinter import simpledialog
-import socket
-from cryptography.fernet import Fernet
-import threading
-from tkinter import filedialog
+from tkcalendar import *
 from Activity import Activity
 import os
 
@@ -33,6 +30,7 @@ class Jog:
             self.elev = 0
             self.zone = 0
             self.pace = 0
+            self.act_date = None
             self.user_data = []
 
             # Load Image
@@ -143,9 +141,7 @@ class Jog:
             self.interactive_frame.pack_propagate(False)
             self.interactive_frame.configure(height = 600, width = 900)
 
-            #establish the socket and the port
-            self.socket = socket.socket()
-            self.port = 8080
+            #establish starting page
             self.indicator(self.connect_marker, self.connect_page)
 
         #method for the connect page (page that shows up when connect button is clicked) and methods
@@ -261,6 +257,11 @@ class Jog:
             self.specific_hr = Label(rcv_frame, text = "", font=('Microsoft YaHei UI Light', 12, 'bold'))
             self.specific_hr.place(x = 310, y = 395)
 
+            self.date_header = Label(rcv_frame,  text = "Date Completed", font=('Microsoft YaHei UI Light', 12, 'bold'))
+            self.date_header.place(x = 350, y = 360)
+            self.date_display = Label(rcv_frame, text = "", font=('Microsoft YaHei UI Light', 12, 'bold'))
+            self.date_display.place(x = 350, y = 395)
+
 
         def on_enter_name(self, e):
             self.name_enter.delete(0, 'end')
@@ -278,6 +279,7 @@ class Jog:
                         self.specific_zone.config(text = str(self.user_data[i].get_zone()))
                         self.specific_pace.config(text = str(self.user_data[i].get_pace()))
                         self.specific_hr.config(text = str(self.user_data[i].get_hr()))
+                        self.date_display.config(text = str(self.user_data[i].get_date()))
                         break
                     else:
                         print("no value found for this specific i value")
@@ -345,6 +347,9 @@ class Jog:
             self.name_entry.bind('<FocusIn>', self.name_enter)
             self.name_entry.bind('<FocusOut>', self.name_exit)
 
+            self.activity_date = Calendar(view_frame, selectmode = "day")
+            self.activity_date.place(x = 420, y = 100)
+
             self.update_button = Button(view_frame, text='Update', bg='red', fg='white', border=0,
             command=self.updatedata)
             self.update_button.place(x=330, y=400)
@@ -396,6 +401,7 @@ class Jog:
             self.new_name = self.name_entry.get()
             self.new_pace = self.pace_entry.get()
             self.new_hr = self.hr_entry.get()
+            self.new_date = self.activity_date.get_date()
 
             #Add activity to the array
             data_added = False
@@ -408,6 +414,7 @@ class Jog:
                 workout.set_zone(20)
                 workout.set_cals(int(self.newcals))
                 workout.set_name(self.new_name)
+                workout.set_date(self.new_date)
                 if len(self.user_data) == 0:
                     self.user_data.insert(0, workout)
                     data_added = True
