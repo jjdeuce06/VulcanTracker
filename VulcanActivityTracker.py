@@ -230,12 +230,12 @@ class Jog:
             self.specific_name.place(x = 20, y = 275)
 
             self.specific_cals_header = Label(viewActivity_frame, text = "Calories Burned", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.specific_cals_header.place(x = 10, y = 300)
+            self.specific_cals_header.place(x = 10, y = 310)
             self.specific_cals = Label(viewActivity_frame, text = "", font=('Microsoft YaHei UI Light', 12, 'bold'))
             self.specific_cals.place(x = 20, y = 335)
 
             self.specific_elev_header = Label(viewActivity_frame, text = "Elevation", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.specific_elev_header.place(x = 10, y = 360)
+            self.specific_elev_header.place(x = 10, y = 370)
             self.specific_elev = Label(viewActivity_frame, text = "", font=('Microsoft YaHei UI Light', 12, 'bold'))
             self.specific_elev.place(x = 20, y = 395)
 
@@ -245,19 +245,22 @@ class Jog:
             self.specific_zone.place(x = 310, y = 275)
 
             self.specific_pace_header = Label(viewActivity_frame, text = "Pace", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.specific_pace_header.place(x = 300, y = 300)
+            self.specific_pace_header.place(x = 300, y = 305)
             self.specific_pace = Label(viewActivity_frame, text = "", font=('Microsoft YaHei UI Light', 12, 'bold'))
             self.specific_pace.place(x = 310, y = 335)
 
             self.specific_hr_header = Label(viewActivity_frame, text = "Heart Rate", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.specific_hr_header.place(x = 300, y = 360)
+            self.specific_hr_header.place(x = 300, y = 370)
             self.specific_hr = Label(viewActivity_frame, text = "", font=('Microsoft YaHei UI Light', 12, 'bold'))
             self.specific_hr.place(x = 310, y = 395)
 
             self.date_header = Label(viewActivity_frame,  text = "Date Completed", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.date_header.place(x = 350, y = 360)
+            self.date_header.place(x = 390, y = 370)
             self.date_display = Label(viewActivity_frame, text = "", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.date_display.place(x = 350, y = 395)
+            self.date_display.place(x = 390, y = 395)
+
+            self.race_header = Label(viewActivity_frame, text = "", font=('Microsoft YaHei UI Light', 15, 'bold'))
+            self.race_header.place(x = 350, y = 425)
 
 
         def on_enter_name(self, e):
@@ -277,6 +280,8 @@ class Jog:
                         self.specific_pace.config(text = str(self.user_data[i].get_pace()))
                         self.specific_hr.config(text = str(self.user_data[i].get_hr()))
                         self.date_display.config(text = str(self.user_data[i].get_date()))
+                        if (self.user_data[i].get_race() == True):
+                            self.race_header.config(text = "RACE DAY!")
                         break
                     else:
                         print("no value found for this specific i value")
@@ -346,6 +351,9 @@ class Jog:
 
             self.activity_date = Calendar(addActivity_frame, selectmode = "day")
             self.activity_date.place(x = 420, y = 100)
+            
+            self.raceCheck = Checkbutton(addActivity_frame, text = "Race Day?", fg="black", border = 0, bg = "white", font=('Microsoft YaHei UI Light', 11))
+            self.raceCheck.place(x = 420, y = 300)
 
             self.update_button = Button(addActivity_frame, text='Update', bg='red', fg='white', border=0,
             command=self.updatedata)
@@ -399,6 +407,7 @@ class Jog:
             self.new_pace = self.pace_entry.get()
             self.new_hr = self.hr_entry.get()
             self.new_date = self.activity_date.get_date()
+            #self.check_race = self.raceCheck.getboolean()
 
             #Add activity to the array
             data_added = False
@@ -412,6 +421,7 @@ class Jog:
                 workout.set_cals(int(self.newcals))
                 workout.set_name(self.new_name)
                 workout.set_date(self.new_date)
+                #workout.set_race(self.check_race)
                 if len(self.user_data) == 0:
                     self.user_data.insert(0, workout)
                     data_added = True
@@ -440,7 +450,6 @@ class Jog:
                 self.miles_ran.config(text = str(self.miles_ran_num))
                 self.totalcals.config(text = str(self.calsburned))
                 self.total_elev.config(text = str(self.elev))
-                
         def hide_indicators(self):
             self.connect_marker.config(bg='grey')
             self.view_marker.config(bg='grey')
