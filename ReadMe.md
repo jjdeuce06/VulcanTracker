@@ -1,7 +1,6 @@
 
 # Vulcan Activity Tracker
-# October 2024
-# John J. Gerega
+## John J. Gerega October 2024
 Welcome to my Vulcan Activity Tracker! I started this side project because as an avid runner, I like to keep track of all the possible stats I can when running, such as Heart Rate, miles, mile pace, elevation, and much more. The problem is, that most apps on the market require a subscription. As a college student, I feel this is somewhat unreasonable, so I decided to program my application to view my stats. Most of the data is available on my watch, I have to make the correct calculations. This is also how I am planning to break into the world of databases, hoping to keep track of my stats and potentially any other interested runners. 
 # Contents
 
