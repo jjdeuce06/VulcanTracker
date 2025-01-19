@@ -70,12 +70,66 @@ class Jog:
             label.place(x=75, y=270)
 
             # Sign Up Button
-            sign_up = Button(self.login_frame, width=6, text='Sign Up', border=0, bg='red', cursor='hand2', fg='white')
-            sign_up.place(x=215, y=270)
+            Button(self.login_frame, width=6, text='Sign Up', border=0, bg='red', cursor='hand2', fg='white', command=self.signup).place(x=215, y=270)
 
             # Start the main event loop
             self.login.mainloop()  # This keeps the window open and responsive
+        #Sign in method to ensure username and password matches
 
+        def signin(self):
+            username = self.user.get()
+            password = self.code.get()
+
+            if username == 'user' and password == '1234':
+                self.open_userportal()
+            elif username != 'user' and password != '1234':
+                messagebox.showerror("Invalid", "invalid username and password")
+            elif password != '1234':
+                messagebox.showerror("Invalid", "invalid password")
+            elif username != 'user':
+                messagebox.showerror("Invalid", "invalid username")
+        
+        def signup(self):
+            self.signup_window = Toplevel(self.login)
+            self.signup_window.title("Create new account")
+            self.signup_window.geometry("600x400")
+            self.signup_window.configure(bg="#fff")
+            self.signup_window.resizable(False, False)
+            self.menu_frame = tk.Frame(self.signup_window, bg = 'white')
+
+            #Heading
+            Label(self.signup_window, text = "Create new account", fg="red", bg="white", font=('Microsoft YaHei UI Light', 23, 'bold')).place(x=180, y=20)
+
+            Label(self.signup_window, text = "First name", fg="black", bg="white", font=('Microsoft YaHei UI Light', 11)).place(x=50, y=110)
+            self.fname_entry = Entry(self.signup_window, width=15, fg='black', border=0, bg='white', font=('Microsoft YaHei UI Light', 11))
+            self.fname_entry.place(x=50, y=140)
+            Frame(self.signup_window, width=150, height=2, bg='black').place(x=50, y=160)
+
+            self.lname = Label(self.signup_window, text = "Last name", fg="black", bg="white", font=('Microsoft YaHei UI Light', 11)).place(x=50, y=170)
+            self.lname_entry = Entry(self.signup_window, width=15, fg='black', border=0, bg='white', font=('Microsoft YaHei UI Light', 11))
+            self.lname_entry.place(x=50, y=200)
+            Frame(self.signup_window, width=150, height=2, bg='black').place(x=50, y=220)
+
+            # Age Entry
+            Label(self.signup_window, text="Age", fg="black", bg="white", font=('Microsoft YaHei UI Light', 11)).place(x=50, y=230)
+            self.age_entry = Entry(self.signup_window, width=15, fg='black', border=0, bg='white', font=('Microsoft YaHei UI Light', 11))
+            self.age_entry.place(x=50, y=270)
+            Frame(self.signup_window, width=150, height=2, bg='black').place(x=50, y=290)
+
+            # Username Entry
+            Label(self.signup_window, text="Username", fg="black", bg="white", border = 2, font=('Microsoft YaHei UI Light', 11)).place(x=250, y=110)
+            self.signup_username_entry = Entry(self.signup_window, width=15, fg='black', border=0, bg='white', font=('Microsoft YaHei UI Light', 11))
+            self.signup_username_entry.place(x=250, y=140)
+            Frame(self.signup_window, width=150, height=2, bg='black').place(x=250, y=160)
+
+            # Password Entry
+            Label(self.signup_window, text="Password", fg="black", bg="white", font=('Microsoft YaHei UI Light', 11)).place(x=250, y=170)
+            self.signup_password_entry = Entry(self.signup_window, width=15, fg='black', border=0, bg='white', font=('Microsoft YaHei UI Light', 11), show="*")
+            self.signup_password_entry.place(x=250, y=200)
+            Frame(self.signup_window, width=150, height=2, bg='black').place(x=250, y=220)
+
+            # Confirm Button
+            Button(self.signup_window, width=20, pady=7, text='Confirm', bg='red', fg='white', border=0, command=self.open_userportal).place(x=200, y=350)
 
         #---------USER-----------------#
         def on_enter_user(self, e):
@@ -182,19 +236,6 @@ class Jog:
 
             self.updatetext()
             
-        #Sign in method to ensure username and password matches
-        def signin(self):
-            username = self.user.get()
-            password = self.code.get()
-
-            if username == 'user' and password == '1234':
-                self.open_userportal()
-            elif username != 'user' and password != '1234':
-                messagebox.showerror("Invalid", "invalid username and password")
-            elif password != '1234':
-                messagebox.showerror("Invalid", "invalid password")
-            elif username != 'user':
-                messagebox.showerror("Invalid", "invalid username")
 
 
         #Connection page/methods end

@@ -9,6 +9,7 @@ class Activity:
         self.pace = 0
         self.wname = ""
         self.act_date = None
+        self.race_day = False
 
     #setters
     def set_name(self, workname):
@@ -42,6 +43,8 @@ class Activity:
         self.heartrate = userhr
     def set_date(self, userdate):
         self.act_date = userdate
+    def set_race(self, userrace):
+        self.race_day = userrace
         
 
 
@@ -62,4 +65,6 @@ class Activity:
         return self.wname
     def get_date(self):
         return self.act_date
+    def get_race(self):
+        return self.race_day
     
