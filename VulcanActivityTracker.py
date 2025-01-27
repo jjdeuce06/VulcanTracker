@@ -12,6 +12,8 @@ from tkcalendar import *
 from Activity import Activity
 import os
 
+import mysql.connector
+
 #==========END LIBRARIES=============#
 
 class Jog:
@@ -32,6 +34,8 @@ class Jog:
             self.pace = 0
             self.act_date = None
             self.user_data = []
+
+            
 
             # Load Image
             self.img = PhotoImage(file = 'imgs\cu.png')
