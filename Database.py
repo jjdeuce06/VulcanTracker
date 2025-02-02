@@ -1,9 +1,9 @@
 class Database:
     def ___init__(self):
         self.conn = mysql.connector.connect(
-                host = "localhost",
-                user = "root",
-                password = "Ninjago2!",
+                host = "", #Enter your own data!
+                user = "",
+                password = "",
                 database = "vulcanTracker"
             )
 
