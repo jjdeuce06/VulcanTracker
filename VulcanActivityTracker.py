@@ -35,6 +35,22 @@ class Jog:
             self.act_date = None
             self.user_data = []
 
+            self.conn = mysql.connector.connect(
+                host = "localhost",
+                user = "root",
+                password = "Ninjago2!",
+                database = "vulcanTracker"
+            )
+
+            self.cursor = self.conn.cursor()
+
+            #fetch data testing
+           # select_query = "SELECT * FROM userProfile"
+           # self.cursor.execute(select_query)
+           # results = self.cursor.fetchall()
+            #print("User profile:")
+            #for row in results:
+                #print(row)
             
 
             # Load Image
@@ -86,12 +102,29 @@ class Jog:
 
             if username == 'user' and password == '1234':
                 self.open_userportal()
-            elif username != 'user' and password != '1234':
-                messagebox.showerror("Invalid", "invalid username and password")
-            elif password != '1234':
-                messagebox.showerror("Invalid", "invalid password")
-            elif username != 'user':
-                messagebox.showerror("Invalid", "invalid username")
+            #elif username != 'user' and password != '1234':
+                #messagebox.showerror("Invalid", "invalid username and password")
+            #elif password != '1234':
+                #messagebox.showerror("Invalid", "invalid password")
+            #elif username != 'user':
+                #messagebox.showerror("Invalid", "invalid username")
+            else:
+                user = False
+                passw = False
+                select_query = "SELECT * FROM userProfile"
+                self.cursor.execute(select_query)
+                results = self.cursor.fetchall()
+                print("User profile:")
+                for row in results:
+                    print(row)
+                    if (username == row):
+                        user = True
+                    if (password == row):
+                        passw = True
+                
+                if (user == True and passw == True):
+                    self.open_userportal()
+
         
         def signup(self):
             self.signup_window = Toplevel(self.login)
