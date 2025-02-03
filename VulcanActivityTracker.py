@@ -34,24 +34,14 @@ class Jog:
             self.pace = 0
             self.act_date = None
             self.user_data = []
-
+            
             self.conn = mysql.connector.connect(
-                host = "localhost",
-                user = "root",
-                password = "Ninjago2!",
+                host = "",  #Enter your own data
+                user = "",
+                password = "",
                 database = "vulcanTracker"
             )
-
             self.cursor = self.conn.cursor()
-
-            #fetch data testing
-            # select_query = "SELECT * FROM userProfile"
-            # self.cursor.execute(select_query)
-            # results = self.cursor.fetchall()
-            #print("User profile:")
-            #for row in results:
-                #print(row)
-            
 
             # Load Image
             self.img = PhotoImage(file = 'imgs\cu.png')
@@ -111,15 +101,17 @@ class Jog:
             else:
                 user = False
                 passw = False
+                #database = Database()
+                #datbase.connect_database()
                 select_query = "SELECT * FROM userProfile"
                 self.cursor.execute(select_query)
                 results = self.cursor.fetchall()
                 print("User profile:")
                 for row in results:
                     print(row)
-                    if (username == row):
+                    if (username == row[0]):
                         user = True
-                    if (password == row):
+                    if (password == row[1]):
                         passw = True
                 
                 if (user == True and passw == True):
@@ -166,8 +158,32 @@ class Jog:
             Frame(self.signup_window, width=150, height=2, bg='black').place(x=250, y=220)
 
             # Confirm Button
-            Button(self.signup_window, width=20, pady=7, text='Confirm', bg='red', fg='white', border=0, command=self.open_userportal).place(x=200, y=350)
+            Button(self.signup_window, width=20, pady=7, text='Confirm', bg='red', fg='white', border=0, command=self.create_account).place(x=200, y=350)
 
+        def create_account(self):
+            fname = self.fname_entry.get()
+            lname = self.lname_entry.get()
+            new_age = self.age_entry.get()
+            new_user = self.signup_username_entry.get()
+            new_password = self.signup_password_entry.get()
+
+            try:
+                fname = str(fname)
+                lname = str(lname)
+                new_age = int(new_age)
+                new_user = str(new_user)
+                new_password = str(new_password)
+                insert_query = "INSERT INTO signup (fname, lname, username, password, age) VALUES (%s, %s, %s, %s, %s)"
+                values = (fname, lname, new_user, new_password, new_age)
+                self.cursor.execute(insert_query, values)
+                self.conn.commit()
+                print("Data inserted successfully!")
+                self.open_userportal()
+            except ValueError:
+                messagebox.showerror("Invalid", "invalid entries")
+
+            
+            
         #---------USER-----------------#
         def on_enter_user(self, e):
             self.user.delete(0, 'end')

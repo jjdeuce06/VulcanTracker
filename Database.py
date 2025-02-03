@@ -1,10 +1,12 @@
 class Database:
-    def ___init__(self):
+    def __init__(self):
+        self.conn 
+
+    def connect_database(self):
         self.conn = mysql.connector.connect(
-                host = "", #Enter your own data!
+                host = "",  #Enter your own data
                 user = "",
                 password = "",
                 database = "vulcanTracker"
             )
-
         self.cursor = self.conn.cursor()
