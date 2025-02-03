@@ -45,9 +45,9 @@ class Jog:
             self.cursor = self.conn.cursor()
 
             #fetch data testing
-           # select_query = "SELECT * FROM userProfile"
-           # self.cursor.execute(select_query)
-           # results = self.cursor.fetchall()
+            # select_query = "SELECT * FROM userProfile"
+            # self.cursor.execute(select_query)
+            # results = self.cursor.fetchall()
             #print("User profile:")
             #for row in results:
                 #print(row)
