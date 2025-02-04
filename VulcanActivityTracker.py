@@ -34,6 +34,7 @@ class Jog:
             self.pace = 0
             self.act_date = None
             self.user_data = []
+            self.current_username = None
             
             self.conn = mysql.connector.connect(
                 host = "",  #Enter your own data
@@ -67,7 +68,7 @@ class Jog:
             Frame(self.login_frame, width=295, height=2, bg='black').place(x=25, y=107)
 
 
-            self.code = Entry(self.login_frame, width=25, fg='black', border=0, bg='white', font=('Microsoft YaHei UI Light', 11))
+            self.code = Entry(self.login_frame, width=25, fg='black', border=0, bg='white', font=('Microsoft YaHei UI Light', 11), show="*")
             self.code.place(x=30, y=150)
             self.code.insert(0, 'Password')
             self.code.bind('<FocusIn>', self.on_enter_code)
@@ -106,15 +107,16 @@ class Jog:
                 select_query = "SELECT * FROM userProfile"
                 self.cursor.execute(select_query)
                 results = self.cursor.fetchall()
-                print("User profile:")
+                #print("User profile:")
                 for row in results:
-                    print(row)
+                    #print(row)
                     if (username == row[0]):
                         user = True
                     if (password == row[1]):
                         passw = True
                 
                 if (user == True and passw == True):
+                    self.current_username = username       #assign the username to the global variable for data tracking
                     self.open_userportal()
 
         
@@ -540,8 +542,15 @@ class Jog:
                 # If conversion to int fails, handle it here
                 messagebox.showerror("Invalid Input", "Please enter a valid number for miles.")
         def updatetext(self):
-                self.activites_disp.config(text = str(self.activites))
-                self.miles_ran.config(text = str(self.miles_ran_num))
+                select_query = "SELECT * FROM userProfile"
+                self.cursor.execute(select_query)
+                results = self.cursor.fetchall()
+                for row in results:
+                    print("Database user: ", row[0])
+                    print("User logged in: ", self.current_username)
+                    if str(row[0]) == self.current_username:
+                        self.activites_disp.config(text = str(row[4]))
+                        self.miles_ran.config(text = str(row[3]))
                 self.totalcals.config(text = str(self.calsburned))
                 self.total_elev.config(text = str(self.elev))
         def hide_indicators(self):
