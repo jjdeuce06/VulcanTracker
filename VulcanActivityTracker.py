@@ -527,17 +527,30 @@ class Jog:
             
             self.new_name = ""
             #add to total values
+            select_query = "SELECT miles, activites FROM userProfile WHERE username = %s"
+            self.cursor.execute(select_query, (self.current_username,))
+            result = self.cursor.fetchone()  # Fetch one row (tuple)
+
+            current_miles = float(result[0])
+            current_activities = int(result[1])
             try:
                 # Convert user input to integer and add to miles_ran_num
                     if self.newmiles != "":
                         miles_to_add = float(self.newmiles)  # Convert to float
                         self.miles_ran_num += miles_to_add  # Update the total miles
+                        current_miles += miles_to_add
                     if self.newcals != "":
                         cals_to_add = int(self.newcals)
                         self.calsburned += cals_to_add
                     if self.new_elev != "":
                         elev_to_add = int(self.new_elev)
                         self.elev += elev_to_add
+                    current_activities += 1
+                    # Update the database with new values
+                    update_query = "UPDATE userProfile SET miles = %s, activites = %s WHERE username = %s"
+                    self.cursor.execute(update_query, (current_miles, current_activities, self.current_username))
+                    self.conn.commit()
+                    print("database updated")
             except ValueError:
                 # If conversion to int fails, handle it here
                 messagebox.showerror("Invalid Input", "Please enter a valid number for miles.")
