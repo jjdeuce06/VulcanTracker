@@ -351,12 +351,9 @@ class Jog:
             self.specific_hr.place(x = 310, y = 395)
 
             self.date_header = Label(viewActivity_frame,  text = "Date Completed", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.date_header.place(x = 390, y = 370)
+            self.date_header.place(x = 430, y = 370)
             self.date_display = Label(viewActivity_frame, text = "", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.date_display.place(x = 390, y = 395)
-
-            self.race_header = Label(viewActivity_frame, text = "", font=('Microsoft YaHei UI Light', 15, 'bold'))
-            self.race_header.place(x = 350, y = 425)
+            self.date_display.place(x = 430, y = 395)
 
 
         def on_enter_name(self, e):
