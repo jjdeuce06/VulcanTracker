@@ -252,147 +252,250 @@ class Jog:
             self.root.geometry("925x500+300+200")
             self.root.title("Vulcan Activity Tracker")
             self.root.resizable(False, False)
-            self.menu_frame = tk.Frame(self.root, bg = 'white')
-            #Home button and connect button indicator set up (still need to change names)
-            self.connect_btn = tk.Button(self.menu_frame, text = 'Home', font = ('Bold', 12), fg = 'black', bd = 0,
-                                        command=lambda: self.indicator(self.connect_marker, self.total_page))
-            self.connect_btn.place(x = 12, y = 50)
+            self.root.configure(bg=self.BG_COLOR)
+            
+            # Menu frame with modern styling
+            self.menu_frame = tk.Frame(self.root, bg=self.PRIMARY_COLOR)
+            
+            # Modern styled menu buttons
+            button_style = {'font': ('Helvetica', 12, 'bold'), 
+                          'fg': 'white', 
+                          'bg': self.PRIMARY_COLOR, 
+                          'bd': 0,
+                          'padx': 20,
+                          'pady': 10,
+                          'activebackground': self.SECONDARY_COLOR,
+                          'activeforeground': 'white'}
+            
+            #Home button with modern styling
+            self.connect_btn = tk.Button(self.menu_frame, 
+                                      text='Home',
+                                      **button_style,
+                                      command=lambda: self.indicator(self.connect_marker, self.total_page))
+            self.connect_btn.place(x=0, y=50)
 
-            self.connect_marker = tk.Label(self.menu_frame, text = '', bg = 'white')
-            self.connect_marker.place(x = 5, y = 50, width = 5, height = 30)
+            self.connect_marker = tk.Label(self.menu_frame, bg=self.SECONDARY_COLOR)
+            self.connect_marker.place(x=0, y=50, width=4, height=40)
 
-            #Add Data button and view button indicator set up
-            self.view_btn = tk.Button(self.menu_frame, text = 'Add data', font = ('Bold', 12), fg = 'black', bd = 0,
-                command=lambda: self.indicator(self.view_marker, self.addActivity_page))
-            self.view_btn.place(x = 12, y = 150)
+            #View Specific button with modern styling
+            self.rcv_btn = tk.Button(self.menu_frame, 
+                                  text='View Specific',
+                                  **button_style,
+                                  command=lambda: self.indicator(self.rcv_marker, self.viewActivity_page))
+            self.rcv_btn.place(x=0, y=100)
 
-            self.view_marker = tk.Label(self.menu_frame, text='', bg = 'white')
-            self.view_marker.place(x = 5, y = 150, width = 5, height = 30)
+            self.rcv_marker = tk.Label(self.menu_frame, bg=self.SECONDARY_COLOR)
+            self.rcv_marker.place(x=0, y=100, width=4, height=40)
 
-            #Specific activity button and receive button indicator set up
-            self.rcv_btn = tk.Button(self.menu_frame, text = 'View Specific', font = ('Bold', 12), fg = 'black', bd = 0,
-                                    command=lambda: self.indicator(self.rcv_marker, self.viewActivity_page))
-            self.rcv_btn.place(x = 10, y = 100)
+            #Add Data button with modern styling
+            self.view_btn = tk.Button(self.menu_frame, 
+                                   text='Add Data',
+                                   **button_style,
+                                   command=lambda: self.indicator(self.view_marker, self.addActivity_page))
+            self.view_btn.place(x=0, y=150)
 
-            self.rcv_marker = tk.Label(self.menu_frame, text='', bg = 'black')
-            self.rcv_marker.place(x = 3, y = 100, width = 5, height = 30)
+            self.view_marker = tk.Label(self.menu_frame, bg=self.SECONDARY_COLOR)
+            self.view_marker.place(x=0, y=150, width=4, height=40)
 
             #Sizing and packing the menu frame
-            self.menu_frame.pack(side = tk.LEFT)
-            self.menu_frame.propagate(False)
-            self.menu_frame.configure(width = 100, height = 600)
+            self.menu_frame.pack(side=tk.LEFT, fill='y')
+            self.menu_frame.pack_propagate(False)
+            self.menu_frame.configure(width=150, height=600)
 
-            #Initialization, sizing, and packing of the interactive frame (where the user will enter information)
-            self.interactive_frame = tk.Frame(self.root, highlightbackground='red', highlightthickness=3)
-            self.interactive_frame.pack(side=tk.LEFT)
+            #Modern styled main content frame
+            self.interactive_frame = tk.Frame(self.root, 
+                                           bg=self.BG_COLOR,
+                                           highlightbackground=self.PRIMARY_COLOR,
+                                           highlightthickness=2)
+            self.interactive_frame.pack(side=tk.LEFT, fill='both', expand=True)
             self.interactive_frame.pack_propagate(False)
-            self.interactive_frame.configure(height = 600, width = 900)
+            self.interactive_frame.configure(height=600, width=900)
 
             #establish starting page
             self.indicator(self.connect_marker, self.total_page)
 
-        #method for the connect page (page that shows up when connect button is clicked) and methods
         def total_page(self):
             total_frame = tk.Frame(self.interactive_frame)
-
-            # Pack the new frame into the interactive_frame
             total_frame.pack(fill='both', expand=True)
-            total_frame.config(bg = "white")
+            total_frame.config(bg=self.BG_COLOR)
 
-            # Total statistics Box - this where total stats for a user will be placed
-            heading = Label(total_frame, text='Your Stats', fg='red', bg='white', font=('Microsoft YaHei UI Light', 23, 'bold'))
-            heading.place(x = 300, y = 20)
+            # Main heading with modern styling
+            heading = Label(total_frame, 
+                          text='Your Stats',
+                          fg=self.PRIMARY_COLOR,
+                          bg=self.BG_COLOR,
+                          font=('Helvetica', 28, 'bold'))
+            heading.place(x=300, y=20)
 
-            self.activity_header = Label(total_frame, text = "Total activities", fg='red', bg='white', font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.activity_header.place(x=20, y=80)
+            # Stats container frame
+            stats_frame = Frame(total_frame, 
+                              bg='white',
+                              highlightbackground=self.PRIMARY_COLOR,
+                              highlightthickness=1)
+            stats_frame.place(x=20, y=80, width=800, height=350)
 
-            self.activites_disp = Label(total_frame, text = self.activites, fg = "red", bg='white', font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.activites_disp.place(x = 60, y = 105)
-
-            self.miles_ran_header = Label(total_frame, text = "Total miles", fg='red', bg='white', font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.miles_ran_header.place(x=20, y=140)
-
-            self.miles_ran = Label(total_frame, text = self.miles_ran_num, fg = "red", bg='white', font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.miles_ran.place(x = 60, y = 165)
-
-            self.calsburnedheader = Label(total_frame, text = "Total calories burned", fg='red', bg='white', font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.calsburnedheader.place(x = 20, y = 210)
-
-            self.totalcals = Label(total_frame, text = self.calsburned, fg = "red", bg='white', font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.totalcals.place(x = 60, y = 235)
-
-            self.elev_header = Label(total_frame, text = "Total elevation gained", fg='red', bg='white', font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.elev_header.place(x=20, y = 280)
+            # Modern styled stat labels
+            stat_style = {'fg': self.PRIMARY_COLOR,
+                        'bg': 'white',
+                        'font': ('Helvetica', 12, 'bold')}
             
-            self.total_elev = Label(total_frame, text = self.elev, fg = "red", bg='white', font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.total_elev.place(x = 60, y = 305)
+            value_style = {'fg': self.SECONDARY_COLOR,
+                         'bg': 'white',
+                         'font': ('Helvetica', 14, 'bold')}
+
+            # Activities
+            self.activity_header = Label(stats_frame, text="Total Activities", **stat_style)
+            self.activity_header.place(x=30, y=20)
+            self.activites_disp = Label(stats_frame, text=self.activites, **value_style)
+            self.activites_disp.place(x=30, y=50)
+
+            # Miles
+            self.miles_ran_header = Label(stats_frame, text="Total Miles", **stat_style)
+            self.miles_ran_header.place(x=30, y=100)
+            self.miles_ran = Label(stats_frame, text=self.miles_ran_num, **value_style)
+            self.miles_ran.place(x=30, y=130)
+
+            # Calories
+            self.calsburnedheader = Label(stats_frame, text="Total Calories Burned", **stat_style)
+            self.calsburnedheader.place(x=30, y=180)
+            self.totalcals = Label(stats_frame, text=self.calsburned, **value_style)
+            self.totalcals.place(x=30, y=210)
+
+            # Elevation
+            self.elev_header = Label(stats_frame, text="Total Elevation Gained", **stat_style)
+            self.elev_header.place(x=30, y=260)
+            self.total_elev = Label(stats_frame, text=self.elev, **value_style)
+            self.total_elev.place(x=30, y=290)
 
             self.updatetext()
-            
 
+        def hide_indicators(self):
+            self.connect_marker.config(bg=self.BG_COLOR)
+            self.view_marker.config(bg=self.BG_COLOR)
+            self.rcv_marker.config(bg=self.BG_COLOR)
 
-        #Connection page/methods end
-        
+        def indicator(self, lb, page):
+            self.hide_indicators()
+            lb.config(bg=self.SECONDARY_COLOR)
+            self.delete_page()
+            page()
+
         #method for the receive file page (page that shows ep when receive file button is clicked)
         def viewActivity_page(self):
             viewActivity_frame = tk.Frame(self.interactive_frame)
-            # Pack the new frame into the interactive_frame
             viewActivity_frame.pack(fill='both', expand=True)
-            viewActivity_frame.config(bg = 'white')
-            # Server Box
-            heading = Label(viewActivity_frame, text='View Activity', fg='red', bg='white', font=('Microsoft YaHei UI Light', 23, 'bold'))
-            heading.pack(pady = 10)
+            viewActivity_frame.config(bg=self.BG_COLOR)
 
-            #Enter file prompt
-            send_prompt = Label(viewActivity_frame, text = "Please enter the name of the activity you want to view", font=('Microsoft YaHei UI Light', 18, 'bold'))
-            send_prompt.pack(pady = 10)
+            # Modern heading
+            heading = Label(viewActivity_frame, 
+                          text='View Activity',
+                          fg=self.PRIMARY_COLOR,
+                          bg=self.BG_COLOR,
+                          font=('Helvetica', 28, 'bold'))
+            heading.pack(pady=20)
 
-            
-            self.name_enter = Entry(viewActivity_frame, width=25, fg='black', border=0, bg='white', font=('Microsoft YaHei UI Light', 11))
+            # Search container
+            search_frame = Frame(viewActivity_frame,
+                               bg='white',
+                               highlightbackground=self.PRIMARY_COLOR,
+                               highlightthickness=1)
+            search_frame.pack(padx=20, pady=10, fill='x')
+
+            # Search prompt
+            send_prompt = Label(search_frame,
+                              text="Enter activity name to view details",
+                              fg=self.PRIMARY_COLOR,
+                              bg='white',
+                              font=('Helvetica', 12))
+            send_prompt.pack(pady=10)
+
+            # Modern search entry
+            self.name_enter = Entry(search_frame,
+                                  width=30,
+                                  fg=self.TEXT_COLOR,
+                                  bg='white',
+                                  font=('Helvetica', 12),
+                                  bd=2,
+                                  relief='solid')
             self.name_enter.insert(0, "Activity Name")
             self.name_enter.bind('<FocusIn>', self.on_enter_name)
             self.name_enter.bind('<FocusOut>', self.on_leave_name)
-            self.name_enter.pack(pady = 10)
+            self.name_enter.pack(pady=10)
 
-            self.find_button = Button(viewActivity_frame, text='Find activity', bg='red', fg='white', border=0,
-            command=self.getactivity)
-            self.find_button.pack(pady = 10)
+            # Modern find button
+            self.find_button = Button(search_frame,
+                                    text='Find Activity',
+                                    bg=self.SECONDARY_COLOR,
+                                    fg='white',
+                                    font=('Helvetica', 11, 'bold'),
+                                    bd=0,
+                                    padx=20,
+                                    pady=8,
+                                    command=self.getactivity)
+            self.find_button.pack(pady=15)
 
-            self.specific_name_header = Label(viewActivity_frame, text = "Activity Name", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.specific_name_header.place(x = 10, y = 240)
-            self.specific_name = Label(viewActivity_frame, text = "", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.specific_name.place(x = 20, y = 275)
+            # Results container
+            results_frame = Frame(viewActivity_frame,
+                                bg='white',
+                                highlightbackground=self.PRIMARY_COLOR,
+                                highlightthickness=1)
+            results_frame.pack(padx=20, pady=20, fill='both', expand=True)
 
-            self.specific_cals_header = Label(viewActivity_frame, text = "Calories Burned", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.specific_cals_header.place(x = 10, y = 310)
-            self.specific_cals = Label(viewActivity_frame, text = "", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.specific_cals.place(x = 20, y = 335)
+            # Modern label styles
+            header_style = {'fg': self.PRIMARY_COLOR,
+                          'bg': 'white',
+                          'font': ('Helvetica', 12, 'bold')}
+            
+            value_style = {'fg': self.SECONDARY_COLOR,
+                         'bg': 'white',
+                         'font': ('Helvetica', 14)}
 
-            self.specific_elev_header = Label(viewActivity_frame, text = "Elevation", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.specific_elev_header.place(x = 10, y = 370)
-            self.specific_elev = Label(viewActivity_frame, text = "", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.specific_elev.place(x = 20, y = 395)
+            # Left column
+            left_frame = Frame(results_frame, bg='white')
+            left_frame.pack(side='left', padx=30, pady=20, fill='both', expand=True)
 
-            self.specific_zone_header = Label(viewActivity_frame, text = "Zone", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.specific_zone_header.place(x = 300, y = 240)
-            self.specific_zone = Label(viewActivity_frame, text = "", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.specific_zone.place(x = 310, y = 275)
+            self.specific_name_header = Label(left_frame, text="Activity Name", **header_style)
+            self.specific_name_header.pack(anchor='w', pady=(0, 5))
+            self.specific_name = Label(left_frame, text="", **value_style)
+            self.specific_name.pack(anchor='w', pady=(0, 20))
 
-            self.specific_pace_header = Label(viewActivity_frame, text = "Pace", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.specific_pace_header.place(x = 300, y = 305)
-            self.specific_pace = Label(viewActivity_frame, text = "", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.specific_pace.place(x = 310, y = 335)
+            self.specific_cals_header = Label(left_frame, text="Calories Burned", **header_style)
+            self.specific_cals_header.pack(anchor='w', pady=(0, 5))
+            self.specific_cals = Label(left_frame, text="", **value_style)
+            self.specific_cals.pack(anchor='w', pady=(0, 20))
 
-            self.specific_hr_header = Label(viewActivity_frame, text = "Heart Rate", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.specific_hr_header.place(x = 300, y = 370)
-            self.specific_hr = Label(viewActivity_frame, text = "", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.specific_hr.place(x = 310, y = 395)
+            self.specific_elev_header = Label(left_frame, text="Elevation", **header_style)
+            self.specific_elev_header.pack(anchor='w', pady=(0, 5))
+            self.specific_elev = Label(left_frame, text="", **value_style)
+            self.specific_elev.pack(anchor='w')
 
-            self.date_header = Label(viewActivity_frame,  text = "Date Completed", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.date_header.place(x = 430, y = 370)
-            self.date_display = Label(viewActivity_frame, text = "", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            self.date_display.place(x = 430, y = 395)
+            # Right column
+            right_frame = Frame(results_frame, bg='white')
+            right_frame.pack(side='left', padx=30, pady=20, fill='both', expand=True)
 
+            self.specific_zone_header = Label(right_frame, text="Zone", **header_style)
+            self.specific_zone_header.pack(anchor='w', pady=(0, 5))
+            self.specific_zone = Label(right_frame, text="", **value_style)
+            self.specific_zone.pack(anchor='w', pady=(0, 20))
+
+            self.specific_pace_header = Label(right_frame, text="Pace", **header_style)
+            self.specific_pace_header.pack(anchor='w', pady=(0, 5))
+            self.specific_pace = Label(right_frame, text="", **value_style)
+            self.specific_pace.pack(anchor='w', pady=(0, 20))
+
+            self.specific_hr_header = Label(right_frame, text="Heart Rate", **header_style)
+            self.specific_hr_header.pack(anchor='w', pady=(0, 5))
+            self.specific_hr = Label(right_frame, text="", **value_style)
+            self.specific_hr.pack(anchor='w')
+
+            # Date at the bottom
+            date_frame = Frame(results_frame, bg='white')
+            date_frame.pack(side='bottom', fill='x', padx=30, pady=20)
+
+            self.date_header = Label(date_frame, text="Date Completed", **header_style)
+            self.date_header.pack(side='left', padx=(0, 10))
+            self.date_display = Label(date_frame, text="", **value_style)
+            self.date_display.pack(side='left')
 
         def on_enter_name(self, e):
             self.name_enter.delete(0, 'end')
@@ -420,79 +523,137 @@ class Jog:
         #method for view file page (page that shows up when view button is clicked)
         def addActivity_page(self):
             addActivity_frame = tk.Frame(self.interactive_frame)
-            # Pack the new frame into the interactive_frame
             addActivity_frame.pack(fill='both', expand=True)
-            addActivity_frame.config(bg = 'white')
-            lb = tk.Label(addActivity_frame, text='Add Data', font=('Bold', 18))
-            lb.pack()
-            #Enter file prompt
-            enc_prompt = Label(addActivity_frame, text = "Please enter your miles ran", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            enc_prompt.place(x=10, y =40)
+            addActivity_frame.config(bg=self.BG_COLOR)
 
-            self.add_miles = Entry(addActivity_frame, width = 25, fg="black", border = 0, bg = "white", font=('Microsoft YaHei UI Light', 11))
-            self.add_miles.place(x = 20, y = 80)
-            self.add_miles.insert(0, 'Add data here')
+            # Modern heading
+            heading = Label(addActivity_frame,
+                          text='Add Activity',
+                          fg=self.PRIMARY_COLOR,
+                          bg=self.BG_COLOR,
+                          font=('Helvetica', 28, 'bold'))
+            heading.pack(pady=20)
+
+            # Main container with two columns
+            main_container = Frame(addActivity_frame, bg=self.BG_COLOR)
+            main_container.pack(fill='both', expand=True, padx=20, pady=10)
+
+            # Left side for inputs
+            input_frame = Frame(main_container,
+                              bg='white',
+                              highlightbackground=self.PRIMARY_COLOR,
+                              highlightthickness=1)
+            input_frame.pack(side='left', fill='both', expand=True, padx=(0, 10))
+
+            # Right side for calendar
+            calendar_frame = Frame(main_container,
+                                 bg='white',
+                                 highlightbackground=self.PRIMARY_COLOR,
+                                 highlightthickness=1)
+            calendar_frame.pack(side='right', fill='both', expand=True, padx=(10, 0))
+
+            # Modern input styles
+            entry_style = {'width': 25,
+                         'fg': self.TEXT_COLOR,
+                         'bg': 'white',
+                         'font': ('Helvetica', 12),
+                         'bd': 2,
+                         'relief': 'solid'}
+
+            label_style = {'fg': self.PRIMARY_COLOR,
+                         'bg': 'white',
+                         'font': ('Helvetica', 12, 'bold')}
+
+            # Input fields container
+            fields_container = Frame(input_frame, bg='white')
+            fields_container.pack(padx=30, pady=20, fill='both', expand=True)
+
+            # Miles input
+            Label(fields_container, text="Miles Ran", **label_style).pack(anchor='w', pady=(0, 5))
+            self.add_miles = Entry(fields_container, **entry_style)
+            self.add_miles.insert(0, 'Enter miles')
             self.add_miles.bind('<FocusIn>', self.on_enter_miles)
             self.add_miles.bind('<FocusOut>', self.on_exit_miles)
+            self.add_miles.pack(anchor='w', pady=(0, 15))
 
-            cal_prompt = Label(addActivity_frame, text = "Please enter your calories burned", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            cal_prompt.place(x = 10, y = 110)
-
-            self.add_cals = Entry(addActivity_frame, width = 25, fg="black", border = 0, bg = "white", font=('Microsoft YaHei UI Light', 11))
-            self.add_cals.place(x = 20, y = 140)
-            self.add_cals.insert(0, 'Add cals here')
+            # Calories input
+            Label(fields_container, text="Calories Burned", **label_style).pack(anchor='w', pady=(0, 5))
+            self.add_cals = Entry(fields_container, **entry_style)
+            self.add_cals.insert(0, 'Enter calories')
             self.add_cals.bind('<FocusIn>', self.on_enter_cals)
             self.add_cals.bind('<FocusOut>', self.on_exit_cals)
+            self.add_cals.pack(anchor='w', pady=(0, 15))
 
-            elev_prompt = Label(addActivity_frame, text = "Please enter your elevation gained", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            elev_prompt.place(x =10, y = 170)
-
-            self.elev_enter = Entry(addActivity_frame, width = 25, fg="black", border = 0, bg = "white", font=('Microsoft YaHei UI Light', 11))
-            self.elev_enter.place(x=20, y=200)
-            self.elev_enter.insert(0, 'Add elevation here')
+            # Elevation input
+            Label(fields_container, text="Elevation Gained", **label_style).pack(anchor='w', pady=(0, 5))
+            self.elev_enter = Entry(fields_container, **entry_style)
+            self.elev_enter.insert(0, 'Enter elevation')
             self.elev_enter.bind('<FocusIn>', self.on_enter_elev)
             self.elev_enter.bind('<FocusOut>', self.on_exit_elev)
+            self.elev_enter.pack(anchor='w', pady=(0, 15))
 
-            hr_prompt = Label(addActivity_frame, text = "Enter your average heart rate",  font=('Microsoft YaHei UI Light', 11, 'bold'))
-            hr_prompt.place(x = 10, y = 230)
-
-            self.hr_entry = Entry(addActivity_frame, width = 25, fg="black", border = 0, bg = "white", font=('Microsoft YaHei UI Light', 11))
-            self.hr_entry.place(x = 20, y = 260)
-            self.hr_entry.insert(0, 'Add Heart Rate here')
+            # Heart Rate input
+            Label(fields_container, text="Average Heart Rate", **label_style).pack(anchor='w', pady=(0, 5))
+            self.hr_entry = Entry(fields_container, **entry_style)
+            self.hr_entry.insert(0, 'Enter heart rate')
             self.hr_entry.bind('<FocusIn>', self.hr_on_entry)
             self.hr_entry.bind('<FocusOut>', self.hr_on_exit)
+            self.hr_entry.pack(anchor='w', pady=(0, 15))
 
-            pace_prompt = Label(addActivity_frame, text = "Please enter your average pace", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            pace_prompt.place(x = 20, y = 290)
-
-            self.pace_entry = Entry(addActivity_frame, width = 25, fg="black", border = 0, bg = "white", font=('Microsoft YaHei UI Light', 11))
-            self.pace_entry.place(x = 20, y = 320)
-            self.pace_entry.insert(0, 'Add Average Mile Pace')
+            # Pace input
+            Label(fields_container, text="Average Pace", **label_style).pack(anchor='w', pady=(0, 5))
+            self.pace_entry = Entry(fields_container, **entry_style)
+            self.pace_entry.insert(0, 'Enter pace')
             self.pace_entry.bind('<FocusIn>', self.pace_enter)
             self.pace_entry.bind('<FocusOut>', self.pace_exit)
+            self.pace_entry.pack(anchor='w', pady=(0, 15))
 
-            name_prompt = Label(addActivity_frame, text = "Please enter activity name", font=('Microsoft YaHei UI Light', 12, 'bold'))
-            name_prompt.place(x = 10, y = 340)
-
-            self.name_entry = Entry(addActivity_frame, width = 25, fg="black", border = 0, bg = "white", font=('Microsoft YaHei UI Light', 11))
-            self.name_entry.place(x = 20, y = 380)
+            # Activity Name input
+            Label(fields_container, text="Activity Name", **label_style).pack(anchor='w', pady=(0, 5))
+            self.name_entry = Entry(fields_container, **entry_style)
             self.name_entry.insert(0, 'Enter activity name')
             self.name_entry.bind('<FocusIn>', self.name_enter)
             self.name_entry.bind('<FocusOut>', self.name_exit)
+            self.name_entry.pack(anchor='w', pady=(0, 15))
 
-            self.activity_date = Calendar(addActivity_frame, selectmode = "day")
-            self.activity_date.place(x = 420, y = 100)
+            # Race checkbox
+            self.raceCheck = Checkbutton(fields_container,
+                                       text="Race Day",
+                                       fg=self.PRIMARY_COLOR,
+                                       bg='white',
+                                       font=('Helvetica', 12))
+            self.raceCheck.pack(anchor='w', pady=15)
+
+            # Save button
+            self.update_button = Button(fields_container,
+                                      text='Save Activity',
+                                      bg=self.SECONDARY_COLOR,
+                                      fg='white',
+                                      font=('Helvetica', 12, 'bold'),
+                                      bd=0,
+                                      padx=40,
+                                      pady=12,
+                                      command=self.updatedata)
+            self.update_button.pack(anchor='w')
+
+            # Calendar section
+            calendar_container = Frame(calendar_frame, bg='white')
+            calendar_container.pack(padx=20, pady=20, fill='both', expand=True)
+
+            Label(calendar_container, text="Select Activity Date", **label_style).pack(anchor='w', pady=(0, 10))
             
-            self.raceCheck = Checkbutton(addActivity_frame, text = "Race Day?", fg="black", border = 0, bg = "white", font=('Microsoft YaHei UI Light', 11))
-            self.raceCheck.place(x = 420, y = 300)
+            # Much larger calendar
+            self.activity_date = Calendar(calendar_container,
+                                        selectmode="day",
+                                        background=self.SECONDARY_COLOR,
+                                        foreground='white',
+                                        selectforeground='white',
+                                        selectbackground=self.PRIMARY_COLOR,
+                                        font=('Helvetica', 12),  # Larger font
+                                        width=400,              # Much wider
+                                        height=400)             # Much taller
+            self.activity_date.pack(fill='both', expand=True)
 
-            self.update_button = Button(addActivity_frame, text='Update', bg='red', fg='white', border=0,
-            command=self.updatedata)
-            self.update_button.place(x=330, y=400)
-            
-
-
-                    
         def on_enter_miles(self, e):
             self.add_miles.delete(0, 'end')
         def on_exit_miles(self, e):
@@ -601,34 +762,10 @@ class Jog:
                         self.miles_ran.config(text = str(row[3]))
                 self.totalcals.config(text = str(self.calsburned))
                 self.total_elev.config(text = str(self.elev))
-        def hide_indicators(self):
-            self.connect_marker.config(bg='grey')
-            self.view_marker.config(bg='grey')
-            self.rcv_marker.config(bg='grey')
-
-        #method for deleting pages
         def delete_page(self):
             for frame in self.interactive_frame.winfo_children():
                 frame.destroy()
 
-        #method for switching pages (hides indicators, sets new indicator, deletes previous page, shows new page)
-        def indicator(self, lb, page):
-            self.hide_indicators()
-            lb.config(bg='#42a1ff')
-            self.delete_page()
-            page()
-
-
-        #---------USER-----------------#
-        def on_enter_user(self, e):
-            self.user.delete(0, 'end')
-
-        def on_leave_user(self, e):
-            name = self.user.get()
-            if name == '':
-                self.user.insert(0, 'Username')
-        #---------END USER--------------#
-        
 
     #-------------------------END CLIENT CLASS--------------------------------------------#
 
