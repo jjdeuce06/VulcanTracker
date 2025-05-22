@@ -1,4 +1,4 @@
-#=============JOG-A-THON.PY=======================#
+#=============VULCANACTIVITYTRACKE.PY=======================#
 # RUN TRACKING APP
 # JOHN GEREGA
 #==================================================#
@@ -8,7 +8,7 @@ import tkinter as tk
 from tkinter import *
 from tkinter import messagebox, filedialog, scrolledtext
 from tkinter import simpledialog
-from tkcalendar import *
+from tkcalendar import Calendar, DateEntry
 from Activity import Activity
 import os
 
@@ -20,10 +20,17 @@ class Jog:
         def __init__(self):
             self.login = tk.Tk()
             self.login.title("Vulcan Activity Tracker")
-            self.login.geometry("925x500+300+200")
-            self.login.configure(bg = "#fff")
+            self.login.geometry("1000x600+200+100")
+            self.login.configure(bg='#f0f2f5')
             self.login.resizable(False, False)
             self.img = None
+
+            # Define modern colors
+            self.PRIMARY_COLOR = '#2c3e50'
+            self.SECONDARY_COLOR = '#3498db'
+            self.ACCENT_COLOR = '#e74c3c'
+            self.BG_COLOR = '#f0f2f5'
+            self.TEXT_COLOR = '#2c3e50'
 
             self.miles_ran_num = 0
             self.activites = 0
@@ -37,51 +44,82 @@ class Jog:
             self.current_username = None
             
             self.conn = mysql.connector.connect(
-                host = "",  #Enter your own data
-                user = "",
-                password = "",
+                host = "localhost",  #Enter your own data
+                user = "root",
+                password = "Ninjago2!",
                 database = "vulcanTracker"
             )
             self.cursor = self.conn.cursor()
 
-            # Load Image
-            self.img = PhotoImage(file = 'imgs\cu.png')
-            Label(self.login, image=self.img, bg='white').place(x=50, y=50)
-            #Title label
-            self.titlelabel = Label(self.login, text = 'Activity Tracker', fg = 'red', bg = 'white', font=('Microsoft YaHei UI Light', 23, 'bold'))
-            self.titlelabel.place(x = 160, y = 400)
+            # Create main container
+            self.main_container = Frame(self.login, bg=self.BG_COLOR)
+            self.main_container.pack(fill='both', expand=True, padx=20, pady=20)
 
-            #Sign Up Box
-            self.login_frame = Frame(self.login, width = 350, height = 350, bg = "white")
-            self.login_frame.place(x=480, y=70)
+            # Left side image container
+            self.image_container = Frame(self.main_container, bg=self.BG_COLOR)
+            self.image_container.pack(side='left', fill='both', expand=True, padx=(0, 20))
 
-            # Heading
-            self.heading = Label(self.login_frame, text='Sign In', fg='red', bg='white', font=('Microsoft YaHei UI Light', 23, 'bold'))
-            self.heading.place(x=100, y=5)
+            # Load Image with better styling
+            self.img = PhotoImage(file='imgs/cu.png')
+            Label(self.image_container, image=self.img, bg=self.BG_COLOR).pack(pady=50)
+            
+            # Title with better styling
+            self.titlelabel = Label(self.image_container, text='Activity Tracker', 
+                                  fg=self.PRIMARY_COLOR, bg=self.BG_COLOR,
+                                  font=('Helvetica', 28, 'bold'))
+            self.titlelabel.pack(pady=(0, 20))
 
-            #User Data entry
-            self.user = Entry(self.login_frame, width=25, fg='black', border=0, bg='white', font=('Microsoft YaHei UI Light', 11))
-            self.user.place(x=30, y=80)
+            # Right side login container
+            self.login_frame = Frame(self.main_container, bg='white', 
+                                   highlightbackground=self.PRIMARY_COLOR,
+                                   highlightthickness=2)
+            self.login_frame.pack(side='right', fill='both', expand=True, padx=(0, 0))
+            self.login_frame.pack_propagate(False)
+
+            # Heading with better styling
+            self.heading = Label(self.login_frame, text='Sign In', 
+                               fg=self.PRIMARY_COLOR, bg='white',
+                               font=('Helvetica', 24, 'bold'))
+            self.heading.pack(pady=(40, 30))
+
+            # Username input with better styling
+            self.user = Entry(self.login_frame, width=25, fg=self.TEXT_COLOR, 
+                            border=0, bg='white',
+                            font=('Helvetica', 12))
+            self.user.pack(pady=(0, 10))
             self.user.insert(0, 'Username')
             self.user.bind('<FocusIn>', self.on_enter_user)
             self.user.bind('<FocusOut>', self.on_leave_user)
-            Frame(self.login_frame, width=295, height=2, bg='black').place(x=25, y=107)
+            Frame(self.login_frame, width=300, height=2, bg=self.PRIMARY_COLOR).pack(pady=(0, 20))
 
-
-            self.code = Entry(self.login_frame, width=25, fg='black', border=0, bg='white', font=('Microsoft YaHei UI Light', 11), show="*")
-            self.code.place(x=30, y=150)
+            # Password input with better styling
+            self.code = Entry(self.login_frame, width=25, fg=self.TEXT_COLOR, 
+                            border=0, bg='white',
+                            font=('Helvetica', 12), show="*")
+            self.code.pack(pady=(0, 10))
             self.code.insert(0, 'Password')
             self.code.bind('<FocusIn>', self.on_enter_code)
             self.code.bind('<FocusOut>', self.on_leave_code)
-            Frame(self.login_frame, width=295, height=2, bg='black').place(x=25, y=177)
+            Frame(self.login_frame, width=300, height=2, bg=self.PRIMARY_COLOR).pack(pady=(0, 20))
 
-            # Sign In Button
-            Button(self.login_frame, width=39, pady=7, text='Sign In', bg='red', fg='white', border=0, command=self.signin).place(x=35, y=204)
-            label = Label(self.login_frame, text="Don't have an account?", fg='black', bg='white', font=('Microsoft YaHei UI Light', 9))
-            label.place(x=75, y=270)
+            # Sign In Button with better styling
+            Button(self.login_frame, width=20, pady=8, text='Sign In', 
+                  bg=self.SECONDARY_COLOR, fg='white', border=0,
+                  font=('Helvetica', 11, 'bold'),
+                  command=self.signin).pack(pady=(20, 30))
 
-            # Sign Up Button
-            Button(self.login_frame, width=6, text='Sign Up', border=0, bg='red', cursor='hand2', fg='white', command=self.signup).place(x=215, y=270)
+            # Sign Up section with better styling
+            signup_frame = Frame(self.login_frame, bg='white')
+            signup_frame.pack()
+            
+            Label(signup_frame, text="Don't have an account?", 
+                 fg=self.TEXT_COLOR, bg='white',
+                 font=('Helvetica', 10)).pack(side='left', padx=(0, 10))
+
+            Button(signup_frame, text='Sign Up', 
+                  bg=self.ACCENT_COLOR, fg='white',
+                  border=0, font=('Helvetica', 10, 'bold'),
+                  command=self.signup).pack(side='right')
 
             # Start the main event loop
             self.login.mainloop()  # This keeps the window open and responsive
