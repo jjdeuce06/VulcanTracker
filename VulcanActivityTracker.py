@@ -44,9 +44,9 @@ class Jog:
             self.current_username = None
             
             self.conn = mysql.connector.connect(
-                host = "localhost",  #Enter your own data
-                user = "root",
-                password = "Ninjago2!",
+                host = "",  #Enter your own data
+                user = "",
+                password = "",
                 database = "vulcanTracker"
             )
             self.cursor = self.conn.cursor()
