@@ -552,6 +552,11 @@ class Jog:
                                  highlightthickness=1)
             calendar_frame.pack(side='right', fill='both', expand=True, padx=(10, 0))
 
+            # Calendar widget for activity date
+            Label(calendar_frame, text="Select Date", fg=self.PRIMARY_COLOR, bg='white', font=('Helvetica', 12, 'bold')).pack(pady=(20, 5))
+            self.activity_date = Calendar(calendar_frame, selectmode="day", date_pattern='yyyy-mm-dd')
+            self.activity_date.pack(pady=10)
+
             # Modern input styles
             entry_style = {'width': 25,
                          'fg': self.TEXT_COLOR,
@@ -618,41 +623,25 @@ class Jog:
 
             # Race checkbox
             self.raceCheck = Checkbutton(fields_container,
-                                       text="Race Day",
-                                       fg=self.PRIMARY_COLOR,
-                                       bg='white',
-                                       font=('Helvetica', 12))
+                                    text="Race Day",
+                                    fg=self.PRIMARY_COLOR,
+                                    bg='white',
+                                    font=('Helvetica', 12))
             self.raceCheck.pack(anchor='w', pady=15)
 
-            # Save button
-            self.update_button = Button(fields_container,
-                                      text='Save Activity',
-                                      bg=self.SECONDARY_COLOR,
-                                      fg='white',
-                                      font=('Helvetica', 12, 'bold'),
-                                      bd=0,
-                                      padx=40,
-                                      pady=12,
-                                      command=self.updatedata)
-            self.update_button.pack(anchor='w')
+            # Submit button
+            self.update_button = Button(calendar_frame,
+                text='Submit',
+                bg=self.SECONDARY_COLOR,
+                fg='white',
+                border=0,
+                font=('Helvetica', 12, 'bold'),
+                command=self.updatedata)
+            self.update_button.place(x=100, y=350, width=150, height=40)
 
-            # Calendar section
-            calendar_container = Frame(calendar_frame, bg='white')
-            calendar_container.pack(padx=20, pady=20, fill='both', expand=True)
-
-            Label(calendar_container, text="Select Activity Date", **label_style).pack(anchor='w', pady=(0, 10))
-            
-            # Much larger calendar
-            self.activity_date = Calendar(calendar_container,
-                                        selectmode="day",
-                                        background=self.SECONDARY_COLOR,
-                                        foreground='white',
-                                        selectforeground='white',
-                                        selectbackground=self.PRIMARY_COLOR,
-                                        font=('Helvetica', 12),  # Larger font
-                                        width=400,              # Much wider
-                                        height=400)             # Much taller
-            self.activity_date.pack(fill='both', expand=True)
+            # Add hover effect
+            self.update_button.bind('<Enter>', lambda e: self.update_button.config(bg=self.ACCENT_COLOR))
+            self.update_button.bind('<Leave>', lambda e: self.update_button.config(bg=self.SECONDARY_COLOR))
 
         def on_enter_miles(self, e):
             self.add_miles.delete(0, 'end')
